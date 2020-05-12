@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { Telegraf } = require('telegraf');
 
-const bot = new Telegraf(process.env.BOT_TOKEN); // t.me/TestovOlegThe_bot
+const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start((ctx) =>
   ctx.reply(`Привет, ${ctx.message.from.first_name} ! Введи /help чтобы узнать что я умею`)
 );
