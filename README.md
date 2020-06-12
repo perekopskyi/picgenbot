@@ -1,3 +1,3 @@
-# nodejs-testbot
+# nodejs-bot
 
-Поздороваться: https://t.me/TestovOlegThe_bot
+Поздороваться: http://t.me/OlegThe_bot
