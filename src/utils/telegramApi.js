@@ -16,13 +16,27 @@ const sendFormData = (data, url) => {
   return fetch(url, request);
 };
 
-exports.set = async (baseUrl, chatId) => {
+exports.setChatPhoto = async (baseUrl, chatId) => {
   const data = {
     chat_id: chatId,
     photo: fs.createReadStream('images/newTitle.jpg'),
   };
 
   const url = `${baseUrl}/setChatPhoto`; // https://api.telegram.org/bot<token>/METHOD_NAME
+
+  sendFormData(data, url)
+    .then((response) => response.text())
+    .then((result) => console.log('----', result))
+    .catch((error) => console.warn(error));
+};
+
+exports.sendPhoto = async (baseUrl, chatId) => {
+  const data = {
+    chat_id: chatId,
+    photo: fs.createReadStream('images/newTitle.jpg'),
+  };
+
+  const url = `${baseUrl}/sendPhoto`; // https://api.telegram.org/bot<token>/METHOD_NAME
 
   sendFormData(data, url)
     .then((response) => response.text())

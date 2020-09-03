@@ -4,7 +4,7 @@ const token = process.env.BOT_TOKEN;
 const { Telegraf } = require('telegraf');
 
 const utils = require('./src/utils');
-const chatPhoto = require('./src/utils/chatPhoto');
+const api = require('./src/utils/telegramApi');
 const canvas = require('./src/canvas-node');
 
 const telegraf = new Telegraf(token);
@@ -57,7 +57,7 @@ telegraf.command('nt', async (ctx) => {
 
   // Set Chat Photo
   const img = canvas.canvas(newTitile);
-  img.then(() => chatPhoto.set(url, chatId));
+  img.then(() => api.setChatPhoto(url, chatId));
 });
 
 // Any text message
@@ -68,9 +68,11 @@ telegraf.on('text', async (ctx) => {
   ctx.reply(`Cам ты ${message}!!
 Введи /help чтобы узнать, что я умею`);
 
+  ctx.reply(`Лови картинку :)`);
+
   const img = canvas.canvas(message);
   console.log('----img', img);
-  img.then(chatPhoto.set(url, chatId));
+  img.then(api.sendPhoto(url, chatId));
 });
 
 telegraf.launch();
