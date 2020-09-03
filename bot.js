@@ -24,15 +24,15 @@ telegraf.help((ctx) =>
 2. Введи команду /newtitle <новое название>`)
 );
 
-// middleware
-telegraf.use(async (ctx, next) => {
-  await next();
-  // console.log('----CTX', ctx);
-});
-
 // set New Titile
-telegraf.command('newtitle', async (ctx) => {
+telegraf.command('newtitle', (ctx) => {
   const chatId = ctx.chat.id;
+  const title = ctx.message.chat.title;
+
+  if (title === undefined) {
+    return ctx.reply(`Sorry, конечно, но это приватный чат.
+Введи /help чтобы узнать, как правильно пользоваться`);
+  }
 
   ctx.reply(`Ты просишь меня поменять название чата, но делаешь это без уважения...`);
   setTimeout(async () => {
@@ -43,36 +43,35 @@ telegraf.command('newtitle', async (ctx) => {
     ctx.setChatTitle(newTitile);
 
     // Set Chat Photo
-    const img = canvas.canvas(newTitile);
-    img.then(() => chatPhoto.set(url, chatId));
+    canvas.canvas(newTitile);
+    api.setChatPhoto(url, chatId);
   }, 3000);
 });
 
 // set New Titile without joke
-telegraf.command('nt', async (ctx) => {
+telegraf.command('nt', (ctx) => {
   const chatId = ctx.chat.id;
 
   const newTitile = utils.createTitleFromCommand(ctx.message.text);
   ctx.setChatTitle(newTitile);
 
   // Set Chat Photo
-  const img = canvas.canvas(newTitile);
-  img.then(() => api.setChatPhoto(url, chatId));
+  canvas.canvas(newTitile);
+  api.setChatPhoto(url, chatId);
 });
 
 // Any text message
-telegraf.on('text', async (ctx) => {
+telegraf.on('text', (ctx) => {
   const chatId = ctx.chat.id;
   const message = ctx.update.message.text;
 
-  ctx.reply(`Cам ты ${message}!!
-Введи /help чтобы узнать, что я умею`);
+  ctx.reply(`Cам ты ${message}!`);
 
-  ctx.reply(`Лови картинку :)`);
+  ctx.reply(`Лови картинку!
+Сохрани и установи на аватарку. Справишься? :)`);
 
-  const img = canvas.canvas(message);
-  console.log('----img', img);
-  img.then(api.sendPhoto(url, chatId));
+  canvas.canvas(message);
+  api.sendPhoto(url, chatId);
 });
 
 telegraf.launch();
