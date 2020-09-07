@@ -4,7 +4,7 @@ const random = require('./random');
 const utils = require('../utils');
 const { createCanvas } = require('canvas');
 
-exports.create = (value) => {
+exports.create = async (value) => {
   const size = 900;
   const randomColor = random.getColor();
 
@@ -14,10 +14,10 @@ exports.create = (value) => {
   ctx.font = '400px Impact';
   ctx.textBaseline = 'middle';
 
-  ctx.beginPath();
-  ctx.rect(0, 0, size, size);
-  ctx.fillStyle = 'rgb(255, 255, 255)';
-  ctx.fill();
+  // ctx.beginPath();
+  // ctx.rect(0, 0, size, size);
+  // ctx.fillStyle = 'rgb(255, 255, 255)';
+  // ctx.fill();
 
   jdenticon.drawIcon(ctx, value, size);
 
@@ -33,6 +33,5 @@ exports.create = (value) => {
 
   // save image
   const buf = canvas.toBuffer();
-  fs.writeFileSync('images/newTitle.jpg', buf);
-  return;
+  return await fs.writeFileSync('images/newTitle.jpg', buf);
 };
