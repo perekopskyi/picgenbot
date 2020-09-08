@@ -24,10 +24,12 @@ telegraf.help((ctx) =>
 );
 
 telegraf.use(async (ctx, next) => {
+  const chatId = ctx.message.chat.id;
   const newChatTitle = ctx.message.new_chat_title;
 
   if (newChatTitle) {
-    // TODO: вынести в отдельную функцию создание аватарки и вставить сюда
+    // Set Chat Photo
+    utils.chatPhotoHendler(chatId, newChatTitle);
   }
   console.log('Response time: %sms', ctx.message);
 });
@@ -71,22 +73,7 @@ telegraf.command('nt', async (ctx) => {
   ctx.setChatTitle(newTitile);
 
   // Set Chat Photo
-  // Step 1 - create picture and save into file
-  canvas.canvas(newTitile);
-
-  // TODO: Fix this kostyl please (remove sending photo into chat)
-  // Step 2 - send photo in chat
-  const sendingResult = await api.sendPhoto(API_BASE, chatId);
-  console.log('sendingResult', sendingResult);
-
-  const photoMessage = sendingResult.message_id;
-  console.log(3);
-  // Step 3 - set chat photo
-  await api.setChatPhoto(API_BASE, chatId);
-  console.log(4);
-
-  // Step 4 - delete message with photo
-  api.deleteMessage(API_BASE, photoMessage, chatId);
+  utils.chatPhotoHendler(chatId, newTitile);
 });
 
 // Any text message

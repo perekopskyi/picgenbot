@@ -1,3 +1,10 @@
+const canvas = require('../canvas-node');
+const api = require('./telegramApi');
+
+// Устанавливаем токен, который выдавал нам бот
+const TOKEN = process.env.BOT_TOKEN;
+const API_BASE = `https://api.telegram.org/bot${TOKEN}`;
+
 exports.getChatTitle = (ctx) => {
   const {
     message: {
@@ -49,4 +56,20 @@ exports.shortener = (string) => {
   }
 
   return arrayOfLetters.join('');
+};
+
+exports.chatPhotoHendler = async (chatId, title) => {
+  // Step 1 - create picture and save into file
+  canvas.canvas(title);
+
+  // TODO: Fix this kostyl please. Remove sending photo into chat (step 2 & 4)
+  // Step 2 - send photo in chat
+  const sendingResult = await api.sendPhoto(API_BASE, chatId);
+  const photoMessage = sendingResult.message_id;
+
+  // Step 3 - set chat photo
+  await api.setChatPhoto(API_BASE, chatId);
+
+  // Step 4 - delete message with photo
+  api.deleteMessage(API_BASE, photoMessage, chatId);
 };
