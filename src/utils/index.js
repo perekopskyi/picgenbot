@@ -1,18 +1,6 @@
 const canvas = require('../canvas-node');
 const api = require('./telegramApi');
-
-// Устанавливаем токен, который выдавал нам бот
-const TOKEN = process.env.BOT_TOKEN;
-const API_BASE = `https://api.telegram.org/bot${TOKEN}`;
-
-exports.getChatTitle = (ctx) => {
-  const {
-    message: {
-      chat: { title },
-    },
-  } = ctx;
-  return title ? `Название чата - ${title}` : 'Это приватный чат. У него нет названия';
-};
+const API_BASE = `https://api.telegram.org/bot${process.env.BOT_TOKEN}`;
 
 /**
  * Extracts the command from the message and returns a clean message
@@ -30,8 +18,10 @@ exports.createTitleFromCommand = (command) => {
   return command.split(' ').slice(1).join(' ');
 };
 
-exports.json = (data) => JSON.stringify(data, null, '\t');
-
+/**
+ * Shortens the chat name to 2 letters excluding the constant prefix
+ * @param {string} string
+ */
 exports.shortener = (string) => {
   const prefix = 'AmW |';
   let titleName = '';
@@ -58,9 +48,14 @@ exports.shortener = (string) => {
   return arrayOfLetters.join('');
 };
 
+/**
+ * Creates a picture and sets it as a chat photo
+ * @param {*} chatId
+ * @param {string} title of chat
+ */
 exports.chatPhotoHendler = async (chatId, title) => {
   // Step 1 - create picture and save into file
-  canvas.canvas(title);
+  canvas.create(title);
 
   // TODO: Fix this kostyl please. Remove sending photo into chat (step 2 & 4)
   // Step 2 - send photo in chat
