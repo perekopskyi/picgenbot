@@ -23,7 +23,7 @@ exports.createTitleFromCommand = (command) => {
  * @param {string} string
  */
 exports.shortener = (string) => {
-  const prefix = 'AmW |';
+  const prefix = process.env.PREFIX;
   let titleName = '';
 
   const havePrefix = string.toUpperCase().includes(prefix.toUpperCase());
