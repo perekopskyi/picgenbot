@@ -3,8 +3,10 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 // https://api.telegram.org/bot<token>/METHOD_NAME
 
+const imagePath = 'images/newTitle.jpg';
+
 /**
- * Форма преобразует данные в FormData и отправляет на указанный url
+ * Form converts the data to FormData and sends it to the specified url
  * @param {object} data
  * @param {string} url
  */
@@ -17,12 +19,15 @@ const sendFormData = (data, url) => {
   return fetch(url, request);
 };
 
-const imagePath = 'images/newTitle.jpg';
-
-exports.setChatPhoto = async (apiBase, chatId) => {
+/**
+ *
+ * @param {string} apiBase url
+ * @param {string | number} chat_id
+ */
+exports.setChatPhoto = async (apiBase, chat_id) => {
   const url = `${apiBase}/setChatPhoto`;
   const data = {
-    chat_id: chatId,
+    chat_id,
     photo: fs.createReadStream(imagePath),
   };
 
@@ -35,12 +40,12 @@ exports.setChatPhoto = async (apiBase, chatId) => {
 /**
  * Send photo in chat
  * @param {string} apiBase telegram api
- * @param {string} chatId
+ * @param {string} chat_id
  */
-exports.sendPhoto = async (apiBase, chatId) => {
+exports.sendPhoto = async (apiBase, chat_id) => {
   const url = `${apiBase}/sendPhoto`;
   const data = {
-    chat_id: chatId,
+    chat_id,
     photo: fs.createReadStream(imagePath),
   };
 
@@ -56,6 +61,12 @@ exports.sendPhoto = async (apiBase, chatId) => {
     .catch((error) => console.warn(error));
 };
 
+/**
+ * Delete message from chat
+ * @param {string} apiBase
+ * @param {string} message_id
+ * @param {string | number} chat_id
+ */
 exports.deleteMessage = async (apiBase, message_id, chat_id) => {
   const data = {
     chat_id,
