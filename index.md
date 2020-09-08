@@ -1,37 +1,65 @@
-## Welcome to GitHub Pages
+# Picture Generator bot
 
-You can use the [editor on GitHub](https://github.com/perekopskyi/picgenbot/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+PicGenBot is designed to create a unique picture for your chats
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Features
 
-### Markdown
+- Can change the name of the chat
+- Generate a unique picture based on the name of the chat
+- Set picture as Chat Photo
+- Track the chat name and change the picture when it was changed
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Tech
 
-```markdown
-Syntax highlighted code block
+Bot uses a number of open source projects to work properly:
 
-# Header 1
-## Header 2
-### Header 3
+- [node.js] - evented I/O for the backend
+- [telegraf.js] - Telegraf: Modern Telegram Bot Framework for Node.js
+- [jdenticon] - Open source library for generating identicons.
 
-- Bulleted
-- List
+### Installation
 
-1. Numbered
-2. List
+Bot requires [Node.js] v12+ to run.
 
-**Bold** and _Italic_ and `Code` text
+Install the dependencies and devDependencies and start the bot.
 
-[Link](url) and ![Image](src)
+```sh
+$ cd picgenbot
+$ npm install -d
+$ npm run start
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Environments place in `.env` file
 
-### Jekyll Themes
+```sh
+BOT_TOKEN
+PREFIX
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/perekopskyi/picgenbot/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+- BOT_TOKEN - Each bot is given a unique authentication token [when it is created](https://core.telegram.org/bots#6-botfather). The token looks something like 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
+- PREFIX - The string to be excluded when generating the abbreviation for your chat
 
-### Support or Contact
+### Development
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Want to contribute? Great!
+We will be glad to develop this bot.
+
+### Docker
+
+PicGenBot is very easy to install and deploy in a Docker container.
+
+### Todos
+
+- Write Tests
+- Add New Features
+
+## License
+
+MIT
+
+**Free Software, Hell Yeah!**
+
+[//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
+[node.js]: http://nodejs.org
+[telegraf.js]: https://telegraf.js.org/
+[jdenticon]: https://jdenticon.com/
