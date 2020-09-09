@@ -54,7 +54,6 @@ exports.sendPhoto = async (apiBase, chat_id) => {
     .then((result) => {
       console.log('sendPhoto -> result', result);
       if (result.ok) {
-        console.log('exports.sendPhoto -> result.result', result.result);
         return result.result;
       }
     })

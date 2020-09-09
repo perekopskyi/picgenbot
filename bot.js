@@ -78,7 +78,7 @@ telegraf.command('nt', async (ctx) => {
     Введи /help чтобы узнать, как правильно пользоваться`);
   }
 
-  const newTitile = utils.createTitleFromCommand(ctx.message.text);
+  const newTitile = utils.createTitleFromCommand(ctx);
   ctx.setChatTitle(newTitile);
 });
 

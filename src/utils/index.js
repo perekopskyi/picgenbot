@@ -27,7 +27,12 @@ exports.checkCommandArguments = (command) => {
  * Retrieves the name attached to the command
  * @param {string} command message from telegram api
  */
-exports.createTitleFromCommand = (command) => {
+exports.createTitleFromCommand = (ctx) => {
+  const entities = ctx.message.entities;
+  console.log('exports.createTitleFromCommand -> entities', entities);
+  const command = ctx.message.text;
+  console.log('exports.createTitleFromCommand -> command', command);
+
   return command.split(' ').slice(1).join(' ');
 };
 
@@ -36,21 +41,15 @@ exports.createTitleFromCommand = (command) => {
  * @param {string} string
  */
 exports.shortener = (string) => {
-  const prefix = process.env.PREFIX || '';
-  let titleName = '';
+  console.log('exports.shortener -> string', string);
+  const prefix = process.env.PREFIX || null;
 
-  const havePrefix = string.toUpperCase().includes(prefix.toUpperCase());
-  if (havePrefix) {
-    titleName = string.substring(5);
-  } else {
-    titleName = string;
-  }
+  const havePrefix = prefix && string.toUpperCase().includes(prefix.toUpperCase());
+  const titleName = havePrefix ? string.substring(prefix.length) : string;
 
   const arrayFromString = titleName.trim().split(' ');
 
-  let arrayOfLetters = arrayFromString.map((item) => {
-    return item.charAt(0).toUpperCase();
-  });
+  let arrayOfLetters = arrayFromString.map((item) => item.charAt(0).toUpperCase());
 
   if (arrayOfLetters.length > 2) {
     arrayOfLetters = arrayOfLetters.slice(0, 2);
