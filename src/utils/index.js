@@ -36,15 +36,13 @@ exports.createTitleFromCommand = (command) => {
  * @param {string} string
  */
 exports.shortener = (string) => {
-  const prefix = process.env.PREFIX;
+  const prefix = process.env.PREFIX || '';
   let titleName = '';
 
   const havePrefix = string.toUpperCase().includes(prefix.toUpperCase());
   if (havePrefix) {
-    console.log(true);
     titleName = string.substring(5);
   } else {
-    console.log(false);
     titleName = string;
   }
 
