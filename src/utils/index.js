@@ -3,6 +3,19 @@ const api = require('./telegramApi');
 const API_BASE = `https://api.telegram.org/bot${process.env.BOT_TOKEN}`;
 
 /**
+ * Checking private chat. Return true if chat public
+ * @param {object} ctx
+ */
+exports.getChatType = (ctx) => {
+  const {
+    message: {
+      chat: { title, type },
+    },
+  } = ctx;
+  return title || type !== 'private';
+};
+
+/**
  * Extracts the command from the message and returns a clean message
  * @param {string} command
  */
