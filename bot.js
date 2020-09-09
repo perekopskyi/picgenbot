@@ -34,7 +34,7 @@ telegraf.use(async (ctx, next) => {
     // Set Chat Photo
     utils.chatPhotoHendler(chatId, newChatTitle);
   }
-  console.log('Response time: %sms', ctx.message);
+  console.log('message', ctx.message);
   await next();
 });
 
@@ -69,10 +69,13 @@ telegraf.command('newtitle', (ctx) => {
  * Handler for /nt command (/newtitle command without jokes).
  */
 telegraf.command('nt', async (ctx) => {
-  const chatId = ctx.chat.id;
-
   if (!utils.checkCommandArguments(ctx.message.text)) {
     return ctx.reply(`Введите команду и назватние нового чата в одном сообщении`);
+  }
+
+  if (!utils.getChatType(ctx)) {
+    return ctx.reply(`Sorry, конечно, но это приватный чат.
+    Введи /help чтобы узнать, как правильно пользоваться`);
   }
 
   const newTitile = utils.createTitleFromCommand(ctx.message.text);
