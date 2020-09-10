@@ -53,8 +53,11 @@ exports.sendPhoto = async (apiBase, chat_id) => {
     .then((response) => response.json())
     .then((result) => {
       console.log('sendPhoto -> result', result);
+
       if (result.ok) {
         return result.result;
+      } else {
+        return false;
       }
     })
     .catch((error) => console.warn(error));
