@@ -36,54 +36,61 @@ telegraf.use(async (ctx, next) => {
       utils.chatPhotoHendler(chatId, newChatTitle);
     }
     console.log('USE message', ctx.message);
+    await next();
   } catch (error) {
     console.log('err----', error);
   }
-  await next();
 });
 
 /**
  * Handler for /newtitle command.
  */
 telegraf.command('newtitle', (ctx) => {
-  const chatId = ctx.chat.id;
-  const title = ctx.message.chat.title;
+  try {
+    const title = ctx.message.chat.title;
 
-  if (title === undefined) {
-    return ctx.reply(`Sorry, конечно, но это приватный чат.
+    if (title === undefined) {
+      return ctx.reply(`Sorry, конечно, но это приватный чат.
 Введи /help чтобы узнать, как правильно пользоваться`);
+    }
+
+    if (!utils.checkCommandArguments(ctx.message.text)) {
+      return ctx.reply(
+        `Введите команду и назватние нового чата в одном сообщении. Или измени название чата в настройках`
+      );
+    }
+
+    ctx.reply(`Ты просишь меня поменять название чата, но делаешь это без уважения...`);
+    setTimeout(async () => {
+      ctx.reply(`It's joke! Меняю 😁`);
+
+      const newTitile = utils.createTitleFromCommand(ctx.message.text);
+      ctx.setChatTitle(newTitile);
+    }, 3000);
+  } catch (error) {
+    console.log('err----', error);
   }
-
-  if (!utils.checkCommandArguments(ctx.message.text)) {
-    return ctx.reply(
-      `Введите команду и назватние нового чата в одном сообщении. Или измени название чата в настройках`
-    );
-  }
-
-  ctx.reply(`Ты просишь меня поменять название чата, но делаешь это без уважения...`);
-  setTimeout(async () => {
-    ctx.reply(`It's joke! Меняю 😁`);
-
-    const newTitile = utils.createTitleFromCommand(ctx.message.text);
-    ctx.setChatTitle(newTitile);
-  }, 3000);
 });
 
 /**
  * Handler for /nt command (/newtitle command without jokes).
  */
 telegraf.command('nt', async (ctx) => {
-  if (!utils.checkCommandArguments(ctx.message.text)) {
-    return ctx.reply(`Введите команду и назватние нового чата в одном сообщении`);
-  }
+  try {
+    if (!utils.checkCommandArguments(ctx.message.text)) {
+      return ctx.reply(`Введите команду и назватние нового чата в одном сообщении`);
+    }
 
-  if (!utils.getChatType(ctx)) {
-    return ctx.reply(`Sorry, конечно, но это приватный чат.
-    Введи /help чтобы узнать, как правильно пользоваться`);
-  }
+    if (!utils.getChatType(ctx)) {
+      return ctx.reply(`Sorry, конечно, но это приватный чат.
+      Введи /help чтобы узнать, как правильно пользоваться`);
+    }
 
-  const newTitile = utils.createTitleFromCommand(ctx);
-  ctx.setChatTitle(newTitile);
+    const newTitile = utils.createTitleFromCommand(ctx);
+    ctx.setChatTitle(newTitile);
+  } catch (error) {
+    console.log('err----', error);
+  }
 });
 
 // Any text message
