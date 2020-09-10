@@ -31,13 +31,24 @@ $ npm run start
 
 Environments place in `.env` file
 
-```sh
-BOT_TOKEN
-PREFIX
-```
-
-- BOT_TOKEN - Each bot is given a unique authentication token [when it is created](https://core.telegram.org/bots#6-botfather). The token looks something like 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
-- PREFIX - The string to be excluded when generating the abbreviation for your chat
+| OPTION                   | DEFAULT VALUE           | DESCRIPTION                                                                                                                                                                                                               |
+| ------------------------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| BOT_TOKEN                | -                       | Each bot is given a unique authentication token [when it is created](https://core.telegram.org/bots#6-botfather). The token looks something like 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11                                |
+| PREFIX                   | -                       | The string to be excluded when generating the abbreviation for your chat                                                                                                                                                  |
+| HUES                     | null                    | Limits the possible hues in generated icons. The hues are specified as an array of hues in degrees. If the option is omitted or an empty array is specified, all hues are allowed. [Custom identicon style]               |
+| LIGHTNESS_COLOR_FROM     | 0.4                     | Specifies the lightness range of colored shapes of an icon. The range is expressed as an array containing two numbers, representing the minimum and maximum lightness in the range [0.0, 1.0]. [Custom identicon style]   |
+| LIGHTNESS_COLOR_TO       | 0.8                     | Specifies the lightness range of colored shapes of an icon. The range is expressed as an array containing two numbers, representing the minimum and maximum lightness in the range [0.0, 1.0]. [Custom identicon style]   |
+| LIGHTNESS_GRAYSCALE_FROM | 0.3                     | Specifies the lightness range of grayscale shapes of an icon. The range is expressed as an array containing two numbers, representing the minimum and maximum lightness in the range [0.0, 1.0]. [Custom identicon style] |
+| LIGHTNESS_GRAYSCALE_TO   | 0.9                     | Specifies the lightness range of grayscale shapes of an icon. The range is expressed as an array containing two numbers, representing the minimum and maximum lightness in the range [0.0, 1.0]. [Custom identicon style] |
+| SATURATION_COLOR         | 0.5                     | Specifies the saturation of the originally colored shapes of an icon. The saturation is expressed as a number in the range [0.0, 1.0]. [Custom identicon style]                                                           |
+| SATURATION_GRAYSCALE     | 0                       | Specifies the saturation of the originally grayscale shapes of an icon. The saturation is expressed as a number in the range [0.0, 1.0]. [Custom identicon style]                                                         |
+| BACK_COLOR               | #00000000               | Specifies the background color to be rendered behind the icon. Supported syntaxes are #rgb, #rgba, #rrggbb and #rrggbbaa [Custom identicon style]                                                                         |
+| FILL_STYLE               | 'rgba(20, 20, 20, 0.8)' | Text color                                                                                                                                                                                                                |
+| STROKE_STYLE             | null                    | Stroke color                                                                                                                                                                                                              |
+| SHADOW_COLOR             | randomColor             | Shadow color                                                                                                                                                                                                              |
+| SHADOW_OFFSET_X          | 2                       | horizontal aside                                                                                                                                                                                                          |
+| SHADOW_OFFSET_Y          | 2                       | vertical aside                                                                                                                                                                                                            |
+| SHADOW_BLUR              | 40                      | Shadow blur                                                                                                                                                                                                               |
 
 ### Development
 
@@ -63,3 +74,4 @@ MIT
 [node.js]: http://nodejs.org
 [telegraf.js]: https://telegraf.js.org/
 [jdenticon]: https://jdenticon.com/
+[custom identicon style]: https://jdenticon.com/icon-designer.html?config=343229ff11683213274c255a
