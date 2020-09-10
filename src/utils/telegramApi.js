@@ -25,6 +25,10 @@ const sendFormData = (data, url) => {
  * @param {string | number} chat_id
  */
 exports.setChatPhoto = async (apiBase, chat_id) => {
+  if (!chat_id) {
+    return;
+  }
+
   const url = `${apiBase}/setChatPhoto`;
   const data = {
     chat_id,
@@ -43,6 +47,10 @@ exports.setChatPhoto = async (apiBase, chat_id) => {
  * @param {string} chat_id
  */
 exports.sendPhoto = async (apiBase, chat_id) => {
+  if (!chat_id) {
+    return;
+  }
+
   const url = `${apiBase}/sendPhoto`;
   const data = {
     chat_id,
@@ -70,6 +78,10 @@ exports.sendPhoto = async (apiBase, chat_id) => {
  * @param {string | number} chat_id
  */
 exports.deleteMessage = (apiBase, message_id, chat_id) => {
+  if (!chat_id) {
+    return;
+  }
+
   const data = {
     chat_id,
     message_id,
