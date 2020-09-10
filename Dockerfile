@@ -1,5 +1,5 @@
 FROM node:12.18.3-alpine3.9
-
+LABEL maintainer="yevheniiperekopskyi@gmail.com"
 WORKDIR /app
 
 COPY . /app
