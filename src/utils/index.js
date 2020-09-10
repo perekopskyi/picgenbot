@@ -70,7 +70,7 @@ exports.chatPhotoHendler = async (chatId, title) => {
   // TODO: Fix this kostyl please. Remove sending photo into chat (step 2 & 4)
   // Step 2 - send photo in chat
   const sendingResult = await api.sendPhoto(API_BASE, chatId);
-  if (sendingResult === undefined) {
+  if (sendingResult || sendingResult === undefined) {
     return;
   }
   const photoMessage = sendingResult.message_id;
