@@ -69,7 +69,7 @@ exports.sendPhoto = async (apiBase, chat_id) => {
  * @param {string} message_id
  * @param {string | number} chat_id
  */
-exports.deleteMessage = async (apiBase, message_id, chat_id) => {
+exports.deleteMessage = (apiBase, message_id, chat_id) => {
   const data = {
     chat_id,
     message_id,
@@ -79,6 +79,9 @@ exports.deleteMessage = async (apiBase, message_id, chat_id) => {
 
   sendFormData(data, url)
     .then((response) => response.json())
-    .then((result) => console.log('----', result))
+    .then((result) => {
+      console.log('----', result);
+      return false;
+    })
     .catch((error) => console.warn(error));
 };
