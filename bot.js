@@ -35,11 +35,11 @@ telegraf.use(async (ctx, next) => {
       // Set Chat Photo
       utils.chatPhotoHendler(chatId, newChatTitle);
     }
-    console.log('message', ctx.message);
-    await next();
+    console.log('USE message', ctx.message);
   } catch (error) {
     console.log('err----', error);
   }
+  await next();
 });
 
 /**

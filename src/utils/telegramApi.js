@@ -48,7 +48,7 @@ exports.setChatPhoto = async (apiBase, chat_id) => {
  */
 exports.sendPhoto = async (apiBase, chat_id) => {
   if (!chat_id) {
-    return;
+    throw new Error('Chat_id was not read');
   }
 
   const url = `${apiBase}/sendPhoto`;
@@ -65,7 +65,7 @@ exports.sendPhoto = async (apiBase, chat_id) => {
       if (result.ok) {
         return result.result;
       } else {
-        return false;
+        throw new Error('Sending photo failed');
       }
     })
     .catch((error) => console.warn(error));
