@@ -82,3 +82,7 @@ exports.chatPhotoHendler = async (chatId, title) => {
   // Step 4 - delete message with photo
   api.deleteMessage(API_BASE, photoMessage, chatId);
 };
+
+exports.channelPhotoHandler = async (chanel, titile) => {
+  // TODO: сделать обработчик. Вынести шаг 1, 2, 4, в отдельную функцию
+};

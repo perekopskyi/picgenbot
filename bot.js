@@ -27,19 +27,28 @@ telegraf.help((ctx) =>
  * Middleware that keeps track of the chat name change
  */
 telegraf.use(async (ctx, next) => {
+  console.log('ctx', ctx);
   try {
-    const chatId = ctx.message.chat.id;
-    const newChatTitle = ctx.message.new_chat_title;
-
-    if (newChatTitle) {
-      // Set Chat Photo
-      utils.chatPhotoHendler(chatId, newChatTitle);
+    if (ctx.update.channel_post.new_chat_title) {
+      const channel = ctx.update.channel_post.chat;
+      //  It's chanel! Go change chanel photo
+      utils.channelPhotoHandler(channel, ctx.update.channel_post.new_chat_title);
     }
-    console.log('USE message', ctx.message);
-    await next();
+
+    if (ctx.message) {
+      // It's chat! Go change chat photo
+      const chatId = ctx.message.chat.id;
+      const newChatTitle = ctx.message.new_chat_title;
+
+      if (newChatTitle) {
+        // Set Chat Photo
+        utils.chatPhotoHendler(chatId, newChatTitle);
+      }
+    }
   } catch (error) {
     console.log('err----', error);
   }
+  await next();
 });
 
 /**
