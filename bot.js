@@ -60,7 +60,7 @@ telegraf.command('newtitle', (ctx) => {
   setTimeout(async () => {
     ctx.reply(`It's joke! Меняю 😁`);
 
-    const newTitile = utils.createTitleFromCommand(ctx.message.text);
+    const newTitile = utils.createTitleFromCommand(ctx);
     ctx.setChatTitle(newTitile);
   }, 3000);
 });
