@@ -28,11 +28,7 @@ exports.checkCommandArguments = (command) => {
  * @param {string} command message from telegram api
  */
 exports.createTitleFromCommand = (ctx) => {
-  const entities = ctx.message.entities;
-  console.log('exports.createTitleFromCommand -> entities', entities);
   const command = ctx.message.text;
-  console.log('exports.createTitleFromCommand -> command', command);
-
   return command.split(' ').slice(1).join(' ');
 };
 
@@ -65,18 +61,6 @@ exports.shortener = (string) => {
 exports.chatPhotoHendler = async (chatId, title) => {
   // Step 1 - create picture and save into file
   canvas.create(title);
-
-  // TODO: Fix this kostyl please. Remove sending photo into chat (step 2 & 4)
-  // Step 2 - send photo in chat
-  const sendingResult = await api.sendPhoto(API_BASE, chatId);
-  if (!sendingResult || sendingResult === undefined) {
-    return;
-  }
-  const photoMessage = sendingResult.message_id;
-
-  // Step 3 - set chat photo
+  // Step 2 - set chat photo
   await api.setChatPhoto(API_BASE, chatId);
-
-  // Step 4 - delete message with photo
-  api.deleteMessage(API_BASE, photoMessage, chatId);
 };
