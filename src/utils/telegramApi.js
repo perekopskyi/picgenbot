@@ -40,3 +40,60 @@ exports.setChatPhoto = async (apiBase, chat_id) => {
     .then((result) => console.log('----', result))
     .catch((error) => console.warn(error));
 };
+
+/**
+ * Send photo in chat
+ * @param {string} apiBase telegram api
+ * @param {string} chat_id
+ */
+exports.sendPhoto = async (apiBase, chat_id) => {
+  if (!chat_id) {
+    throw new Error('Chat_id was not read');
+  }
+
+  const url = `${apiBase}/sendPhoto`;
+  const data = {
+    chat_id,
+    photo: fs.createReadStream(imagePath),
+  };
+
+  return await sendFormData(data, url)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log('sendPhoto -> result', result);
+
+      if (result.ok) {
+        return result.result;
+      } else {
+        throw new Error('Sending photo failed');
+      }
+    })
+    .catch((error) => console.warn(error));
+};
+
+/**
+ * Delete message from chat
+ * @param {string} apiBase
+ * @param {string} message_id
+ * @param {string | number} chat_id
+ */
+exports.deleteMessage = (apiBase, message_id, chat_id) => {
+  if (!chat_id) {
+    return;
+  }
+
+  const data = {
+    chat_id,
+    message_id,
+  };
+
+  const url = `${apiBase}/deleteMessage`;
+
+  sendFormData(data, url)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log('----', result);
+      return false;
+    })
+    .catch((error) => console.warn(error));
+};

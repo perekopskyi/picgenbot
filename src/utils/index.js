@@ -61,6 +61,19 @@ exports.shortener = (string) => {
 exports.chatPhotoHendler = async (chatId, title) => {
   // Step 1 - create picture and save into file
   canvas.create(title);
-  // Step 2 - set chat photo
+
+  // TODO: Fix this kostyl please. Remove sending photo into chat (step 2 & 4)
+  // Step 2 - send photo in chat
+  const sendingResult = await api.sendPhoto(API_BASE, chatId);
+  console.log('exports.chatPhotoHendler -> sendingResult', sendingResult);
+  if (!sendingResult || sendingResult === undefined) {
+    throw new Error('Sending failed');
+  }
+  const photoMessage = sendingResult.message_id;
+
+  // Step 3 - set chat photo
   await api.setChatPhoto(API_BASE, chatId);
+
+  // Step 4 - delete message with photo
+  api.deleteMessage(API_BASE, photoMessage, chatId);
 };
