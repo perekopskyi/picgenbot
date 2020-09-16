@@ -28,11 +28,7 @@ exports.checkCommandArguments = (command) => {
  * @param {string} command message from telegram api
  */
 exports.createTitleFromCommand = (ctx) => {
-  const entities = ctx.message.entities;
-  console.log('exports.createTitleFromCommand -> entities', entities);
   const command = ctx.message.text;
-  console.log('exports.createTitleFromCommand -> command', command);
-
   return command.split(' ').slice(1).join(' ');
 };
 
@@ -41,7 +37,6 @@ exports.createTitleFromCommand = (ctx) => {
  * @param {string} string
  */
 exports.shortener = (string) => {
-  console.log('exports.shortener -> string', string);
   const prefix = process.env.PREFIX || null;
 
   const havePrefix = prefix && string.toUpperCase().includes(prefix.toUpperCase());
@@ -66,23 +61,6 @@ exports.shortener = (string) => {
 exports.chatPhotoHendler = async (chatId, title) => {
   // Step 1 - create picture and save into file
   canvas.create(title);
-
-  // TODO: Fix this kostyl please. Remove sending photo into chat (step 2 & 4)
-  // Step 2 - send photo in chat
-  const sendingResult = await api.sendPhoto(API_BASE, chatId);
-  console.log('exports.chatPhotoHendler -> sendingResult', sendingResult);
-  if (!sendingResult || sendingResult === undefined) {
-    throw new Error('Sending failed');
-  }
-  const photoMessage = sendingResult.message_id;
-
-  // Step 3 - set chat photo
+  // Step 2 - set chat photo
   await api.setChatPhoto(API_BASE, chatId);
-
-  // Step 4 - delete message with photo
-  api.deleteMessage(API_BASE, photoMessage, chatId);
-};
-
-exports.channelPhotoHandler = async (chanel, titile) => {
-  // TODO: сделать обработчик. Вынести шаг 1, 2, 4, в отдельную функцию
 };

@@ -27,12 +27,12 @@ telegraf.help((ctx) =>
  * Middleware that keeps track of the chat name change
  */
 telegraf.use(async (ctx, next) => {
-  console.log('ctx', ctx);
   try {
-    if (ctx.update.channel_post.new_chat_title) {
-      const channel = ctx.update.channel_post.chat;
-      //  It's chanel! Go change chanel photo
-      utils.channelPhotoHandler(channel, ctx.update.channel_post.new_chat_title);
+    if (ctx.update.channel_post && ctx.update.channel_post.new_chat_title) {
+      //  It's new title for chanel
+      const chatId = ctx.update.channel_post.chat.id;
+      const newTitle = ctx.update.channel_post.new_chat_title;
+      utils.chatPhotoHendler(chatId, newTitle);
     }
 
     if (ctx.message) {
@@ -98,17 +98,8 @@ telegraf.command('nt', async (ctx) => {
     const newTitile = utils.createTitleFromCommand(ctx);
     ctx.setChatTitle(newTitile);
   } catch (error) {
-    console.log('err----', error);
+    console.log('/nt error: ', error);
   }
 });
-
-// Any text message
-// telegraf.on('text', (ctx) => {
-//   const chat = ctx.getChat().then((result) => console.log(result));
-//   console.log('ctx', chat);
-//   const message = ctx.update.message.text;
-
-//   ctx.reply(`Cам ты ${message}!`);
-// });
 
 telegraf.launch();
