@@ -1,17 +1,12 @@
-FROM node:12.18.3-alpine3.9
+FROM node:14.10.0-stretch-slim
 LABEL maintainer="yevheniiperekopskyi@gmail.com"
+
 WORKDIR /app
 
-RUN apk add --update --no-cache \
-  make \
-  g++ \
-  jpeg-dev \
-  cairo-dev \
-  giflib-dev \
-  pango-dev \
-  && npm i canvas
-
 COPY . /app
-RUN npm i
+
+RUN apt-get update
+RUN apt-get install -y libpango-1.0-0
+RUN npm install
 
 CMD ["node", "bot.js"]
