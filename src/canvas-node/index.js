@@ -4,34 +4,32 @@ const random = require('./random');
 const utils = require('../utils');
 const { createCanvas } = require('canvas');
 
-const HUES = process.env.HUES !== undefined ? process.env.HUES : null;
-const LIGHTNESS_COLOR_FROM =
-  process.env.LIGHTNESS_COLOR_FROM !== undefined ? process.env.LIGHTNESS_COLOR_FROM : 0.4;
-const LIGHTNESS_COLOR_TO =
-  process.env.LIGHTNESS_COLOR_TO !== undefined ? process.env.LIGHTNESS_COLOR_TO : 0.8;
-const LIGHTNESS_GRAYSCALE_FROM =
-  process.env.LIGHTNESS_GRAYSCALE_FROM !== undefined ? process.env.LIGHTNESS_GRAYSCALE_FROM : 0.3;
-const LIGHTNESS_GRAYSCALE_TO =
-  process.env.LIGHTNESS_GRAYSCALE_TO !== undefined ? process.env.LIGHTNESS_GRAYSCALE_TO : 0.9;
-const SATURATION_COLOR =
-  process.env.SATURATION_COLOR !== undefined ? process.env.SATURATION_COLOR : 0.5;
-const SATURATION_GRAYSCALE =
-  process.env.SATURATION_GRAYSCALE !== undefined ? process.env.SATURATION_GRAYSCALE : 0;
-const BACK_COLOR = process.env.BACK_COLOR !== undefined ? process.env.BACK_COLOR : '#00000000';
+const randomColor = random.getColor();
+
+const CANVAS_SIZE = process.env.CANVAS_SIZE || 600;
+const FILL_STYLE = process.env.FILL_STYLE || 'rgba(20, 20, 20, 0.8)';
+const STROKE_STYLE = process.env.STROKE_STYLE || null;
+const SHADOW_COLOR = process.env.SHADOW_COLOR || randomColor;
+const SHADOW_OFFSET_X = process.env.SHADOW_OFFSET_X || 2;
+const SHADOW_OFFSET_Y = process.env.SHADOW_OFFSET_Y || 2;
+const SHADOW_BLUR = process.env.SHADOW_BLUR || 40;
+
+const HUES = process.env.HUES || null;
+const LIGHTNESS_COLOR_FROM = process.env.LIGHTNESS_COLOR_FROM || 0.4;
+const LIGHTNESS_COLOR_TO = process.env.LIGHTNESS_COLOR_TO || 0.8;
+const LIGHTNESS_GRAYSCALE_FROM = process.env.LIGHTNESS_GRAYSCALE_FROM || 0.3;
+const LIGHTNESS_GRAYSCALE_TO = process.env.LIGHTNESS_GRAYSCALE_TO || 0.9;
+const SATURATION_COLOR = process.env.SATURATION_COLOR || 0.5;
+const SATURATION_GRAYSCALE = process.env.SATURATION_GRAYSCALE || 0;
+const BACK_COLOR = process.env.BACK_COLOR || '#00000000';
 
 /**
  * Create a picture based on the entered text
  * @param {string} text
  */
 exports.create = async (text) => {
-  const size = 900;
-  const randomColor = random.getColor();
-
-  const canvas = createCanvas(size, size);
+  const canvas = createCanvas(CANVAS_SIZE, CANVAS_SIZE);
   const ctx = canvas.getContext('2d');
-
-  ctx.font = '420px Impact';
-  ctx.textBaseline = 'middle';
 
   // Custom identicon style
   jdenticon.configure({
@@ -47,17 +45,33 @@ exports.create = async (text) => {
     backColor: BACK_COLOR,
   });
 
-  jdenticon.drawIcon(ctx, text, size);
+  jdenticon.drawIcon(ctx, text, CANVAS_SIZE);
 
-  ctx.shadowBlur = 50;
-  ctx.shadowColor = randomColor;
-  ctx.fillStyle = 'rgba(20, 20, 20, 0.8)';
+  ctx.font = `${CANVAS_SIZE / 2 - 20}px Impact`;
+  ctx.textBaseline = 'middle';
+  ctx.shadowColor = SHADOW_COLOR;
+  ctx.shadowOffsetX = SHADOW_OFFSET_X;
+  ctx.shadowOffsetY = SHADOW_OFFSET_Y;
+  ctx.shadowBlur = SHADOW_BLUR;
+  ctx.fillStyle = FILL_STYLE;
+  ctx.strokeStyle = STROKE_STYLE;
 
   // Shorten the name to an abbreviation
   const abbreviation = utils.shortener(text);
 
   const textSize = ctx.measureText(abbreviation);
-  ctx.fillText(abbreviation, size / 2 - textSize.width / 2, size / 2, size - 20);
+  ctx.fillText(
+    abbreviation,
+    CANVAS_SIZE / 2 - textSize.width / 2,
+    CANVAS_SIZE / 2,
+    CANVAS_SIZE - 10
+  );
+  ctx.strokeText(
+    abbreviation,
+    CANVAS_SIZE / 2 - textSize.width / 2,
+    CANVAS_SIZE / 2,
+    CANVAS_SIZE - 10
+  );
 
   // save image
   const buf = canvas.toBuffer();
