@@ -65,12 +65,13 @@ PicGenBot is very easy to install and deploy in a Docker container.
 ### Example
 
 **Icons**
+
 ![Icon 1](https://i.ibb.co/zS8Czb2/photo-2020-09-17-18-27-11.jpg)
 ![Icon 2](https://i.ibb.co/x3PZZVj/photo-2020-09-17-18-27-23.jpg)
 ![Icon 3](https://i.ibb.co/jDqnTbM/photo-2020-09-17-18-27-29.jpg)
 ![Icon 4](https://i.ibb.co/qsfWS1b/photo-2020-09-17-18-27-38.jpg)
 ![Icon 5](https://i.ibb.co/2c71MbF/photo-2020-09-17-18-27-51.jpg)
-**Example of work bot in chat**
+
 ![Example in chat](https://i.ibb.co/S6cGFcz/Screenshot-at-Sep-17-18-51-28.png)
 
 ## License
