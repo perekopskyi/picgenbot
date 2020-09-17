@@ -6,6 +6,13 @@ const { createCanvas } = require('canvas');
 
 const randomColor = random.getColor();
 
+const parseEnvArray = (string) => {
+  return string
+    .substring(1, string.length - 1)
+    .split(',')
+    .map((item) => Number(item));
+};
+
 const CANVAS_SIZE = process.env.CANVAS_SIZE || 600;
 const FILL_STYLE = process.env.FILL_STYLE || 'rgba(20, 20, 20, 0.8)';
 const STROKE_STYLE = process.env.STROKE_STYLE || null;
@@ -14,11 +21,11 @@ const SHADOW_OFFSET_X = process.env.SHADOW_OFFSET_X || 2;
 const SHADOW_OFFSET_Y = process.env.SHADOW_OFFSET_Y || 2;
 const SHADOW_BLUR = process.env.SHADOW_BLUR || 40;
 
-const HUES = process.env.HUES || null;
-const LIGHTNESS_COLOR_FROM = process.env.LIGHTNESS_COLOR_FROM || 0.4;
-const LIGHTNESS_COLOR_TO = process.env.LIGHTNESS_COLOR_TO || 0.8;
-const LIGHTNESS_GRAYSCALE_FROM = process.env.LIGHTNESS_GRAYSCALE_FROM || 0.3;
-const LIGHTNESS_GRAYSCALE_TO = process.env.LIGHTNESS_GRAYSCALE_TO || 0.9;
+const HUES = (process.env.HUES && parseEnvArray(process.env.HUES)) || [null];
+const LIGHTNESS_COLOR = (process.env.LIGHTNESS_COLOR &&
+  parseEnvArray(process.env.LIGHTNESS_COLOR)) || [0.4, 0.8];
+const LIGHTNESS_GRAYSCALE = (process.env.LIGHTNESS_GRAYSCALE &&
+  parseEnvArray(process.env.LIGHTNESS_GRAYSCALE)) || [0.3, 0.9];
 const SATURATION_COLOR = process.env.SATURATION_COLOR || 0.5;
 const SATURATION_GRAYSCALE = process.env.SATURATION_GRAYSCALE || 0;
 const BACK_COLOR = process.env.BACK_COLOR || '#00000000';
@@ -33,10 +40,10 @@ exports.create = async (text) => {
 
   // Custom identicon style
   jdenticon.configure({
-    hues: [HUES],
+    hues: HUES,
     lightness: {
-      color: [LIGHTNESS_COLOR_FROM, LIGHTNESS_COLOR_TO],
-      grayscale: [LIGHTNESS_GRAYSCALE_FROM, LIGHTNESS_GRAYSCALE_TO],
+      color: LIGHTNESS_COLOR,
+      grayscale: LIGHTNESS_GRAYSCALE,
     },
     saturation: {
       color: SATURATION_COLOR,
