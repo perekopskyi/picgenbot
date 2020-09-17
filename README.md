@@ -62,6 +62,14 @@ PicGenBot is very easy to install and deploy in a Docker container.
 - Write Tests
 - Add New Features
 
+### Example
+
+[Example](https://i.ibb.co/zS8Czb2/photo-2020-09-17-18-27-11.jpg)
+[Example](https://i.ibb.co/x3PZZVj/photo-2020-09-17-18-27-23.jpg)
+[Example](https://i.ibb.co/jDqnTbM/photo-2020-09-17-18-27-29.jpg)
+[Example](https://i.ibb.co/qsfWS1b/photo-2020-09-17-18-27-38.jpg)
+[Example](https://i.ibb.co/2c71MbF/photo-2020-09-17-18-27-51.jpg)
+
 ## License
 
 MIT
