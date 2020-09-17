@@ -21,9 +21,11 @@ const SHADOW_OFFSET_X = process.env.SHADOW_OFFSET_X || 2;
 const SHADOW_OFFSET_Y = process.env.SHADOW_OFFSET_Y || 2;
 const SHADOW_BLUR = process.env.SHADOW_BLUR || 40;
 
-const HUES = parseEnvArray(process.env.HUES) || [null];
-const LIGHTNESS_COLOR = parseEnvArray(process.env.LIGHTNESS_COLOR) || [0.4, 0.8];
-const LIGHTNESS_GRAYSCALE = parseEnvArray(process.env.LIGHTNESS_GRAYSCALE) || [0.3, 0.9];
+const HUES = (process.env.HUES && parseEnvArray(process.env.HUES)) || [null];
+const LIGHTNESS_COLOR = (process.env.LIGHTNESS_COLOR &&
+  parseEnvArray(process.env.LIGHTNESS_COLOR)) || [0.4, 0.8];
+const LIGHTNESS_GRAYSCALE = (process.env.LIGHTNESS_GRAYSCALE &&
+  parseEnvArray(process.env.LIGHTNESS_GRAYSCALE)) || [0.3, 0.9];
 const SATURATION_COLOR = process.env.SATURATION_COLOR || 0.5;
 const SATURATION_GRAYSCALE = process.env.SATURATION_GRAYSCALE || 0;
 const BACK_COLOR = process.env.BACK_COLOR || '#00000000';
